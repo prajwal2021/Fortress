@@ -1,0 +1,11 @@
+/Users/prajwal/Documents/CODE_PROJECTS/Fortress/Fortress.Domain/bin/Debug/net9.0/Fortress.Domain.deps.json
+/Users/prajwal/Documents/CODE_PROJECTS/Fortress/Fortress.Domain/bin/Debug/net9.0/Fortress.Domain.dll
+/Users/prajwal/Documents/CODE_PROJECTS/Fortress/Fortress.Domain/bin/Debug/net9.0/Fortress.Domain.pdb
+/Users/prajwal/Documents/CODE_PROJECTS/Fortress/Fortress.Domain/obj/Debug/net9.0/Fortress.Domain.GeneratedMSBuildEditorConfig.editorconfig
+/Users/prajwal/Documents/CODE_PROJECTS/Fortress/Fortress.Domain/obj/Debug/net9.0/Fortress.Domain.AssemblyInfoInputs.cache
+/Users/prajwal/Documents/CODE_PROJECTS/Fortress/Fortress.Domain/obj/Debug/net9.0/Fortress.Domain.AssemblyInfo.cs
+/Users/prajwal/Documents/CODE_PROJECTS/Fortress/Fortress.Domain/obj/Debug/net9.0/Fortress.Domain.csproj.CoreCompileInputs.cache
+/Users/prajwal/Documents/CODE_PROJECTS/Fortress/Fortress.Domain/obj/Debug/net9.0/Fortress.Domain.dll
+/Users/prajwal/Documents/CODE_PROJECTS/Fortress/Fortress.Domain/obj/Debug/net9.0/refint/Fortress.Domain.dll
+/Users/prajwal/Documents/CODE_PROJECTS/Fortress/Fortress.Domain/obj/Debug/net9.0/Fortress.Domain.pdb
+/Users/prajwal/Documents/CODE_PROJECTS/Fortress/Fortress.Domain/obj/Debug/net9.0/ref/Fortress.Domain.dll
