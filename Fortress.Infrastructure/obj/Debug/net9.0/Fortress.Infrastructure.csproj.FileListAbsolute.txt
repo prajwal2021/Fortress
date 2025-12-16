@@ -17,3 +17,4 @@
 /Users/prajwal/Documents/CODE_PROJECTS/Fortress/Fortress.Infrastructure/obj/Debug/net9.0/Fortress.Infrastructure.pdb
 /Users/prajwal/Documents/CODE_PROJECTS/Fortress/Fortress.Infrastructure/obj/Debug/net9.0/Fortress.Infrastructure.genruntimeconfig.cache
 /Users/prajwal/Documents/CODE_PROJECTS/Fortress/Fortress.Infrastructure/obj/Debug/net9.0/ref/Fortress.Infrastructure.dll
+/Users/prajwal/Documents/CODE_PROJECTS/Fortress/Fortress.Infrastructure/obj/Debug/net9.0/Fortress.Infrastructure.sourcelink.json

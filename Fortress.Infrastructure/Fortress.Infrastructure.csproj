@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.0" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.0" />
     <ProjectReference Include="..\Fortress.Application\Fortress.Application.csproj" />
     <ProjectReference Include="..\Fortress.Domain\Fortress.Domain.csproj" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.0" />

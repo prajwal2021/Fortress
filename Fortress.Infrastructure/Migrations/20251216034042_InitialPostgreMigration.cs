@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Fortress.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreateSqlite : Migration
+    public partial class InitialPostgreMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,9 +15,9 @@ namespace Fortress.Infrastructure.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Email = table.Column<string>(type: "TEXT", nullable: false),
-                    PasswordHash = table.Column<string>(type: "TEXT", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Email = table.Column<string>(type: "text", nullable: false),
+                    PasswordHash = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -28,14 +28,14 @@ namespace Fortress.Infrastructure.Migrations
                 name: "Identities",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    ServiceName = table.Column<string>(type: "TEXT", nullable: false),
-                    Username = table.Column<string>(type: "TEXT", nullable: true),
-                    GeneratedEmail = table.Column<string>(type: "TEXT", nullable: true),
-                    EncryptedPassword = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    EncryptionNonce = table.Column<byte[]>(type: "BLOB", nullable: false),
-                    UserId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    EncryptionTag = table.Column<byte[]>(type: "BLOB", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    ServiceName = table.Column<string>(type: "text", nullable: false),
+                    Username = table.Column<string>(type: "text", nullable: true),
+                    GeneratedEmail = table.Column<string>(type: "text", nullable: true),
+                    EncryptedPassword = table.Column<byte[]>(type: "bytea", nullable: false),
+                    EncryptionNonce = table.Column<byte[]>(type: "bytea", nullable: false),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    EncryptionTag = table.Column<byte[]>(type: "bytea", nullable: false)
                 },
                 constraints: table =>
                 {

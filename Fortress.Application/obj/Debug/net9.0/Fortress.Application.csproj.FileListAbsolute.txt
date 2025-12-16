@@ -13,3 +13,4 @@
 /Users/prajwal/Documents/CODE_PROJECTS/Fortress/Fortress.Application/obj/Debug/net9.0/refint/Fortress.Application.dll
 /Users/prajwal/Documents/CODE_PROJECTS/Fortress/Fortress.Application/obj/Debug/net9.0/Fortress.Application.pdb
 /Users/prajwal/Documents/CODE_PROJECTS/Fortress/Fortress.Application/obj/Debug/net9.0/ref/Fortress.Application.dll
+/Users/prajwal/Documents/CODE_PROJECTS/Fortress/Fortress.Application/obj/Debug/net9.0/Fortress.Application.sourcelink.json

@@ -4,18 +4,14 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Microsoft.Data.Sqlite; // Add this using directive
+using Npgsql.EntityFrameworkCore.PostgreSQL; // Add this using directive
 
 var builder = WebApplication.CreateBuilder(args);
-
-// Create and open an in-memory SQLite connection once, and keep it open
-var connection = new SqliteConnection("DataSource=:memory:");
-connection.Open();
 
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlite(connection)); // Use the shared connection here
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))); // Use PostgreSQL connection string
 
 // Configure JWT authentication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -109,11 +105,7 @@ app.MapControllers();
 using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-    dbContext.Database.EnsureCreated(); // Create the database if it doesn't exist
+    dbContext.Database.Migrate(); // Apply pending migrations
 }
-
-// IMPORTANT: The SqliteConnection needs to stay open for the entire lifetime of the app
-// If the connection is closed, the in-memory database will be lost.
-app.Lifetime.ApplicationStopped.Register(() => connection.Close());
 
 app.Run();

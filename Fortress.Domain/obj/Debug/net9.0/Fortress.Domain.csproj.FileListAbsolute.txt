@@ -9,3 +9,4 @@
 /Users/prajwal/Documents/CODE_PROJECTS/Fortress/Fortress.Domain/obj/Debug/net9.0/refint/Fortress.Domain.dll
 /Users/prajwal/Documents/CODE_PROJECTS/Fortress/Fortress.Domain/obj/Debug/net9.0/Fortress.Domain.pdb
 /Users/prajwal/Documents/CODE_PROJECTS/Fortress/Fortress.Domain/obj/Debug/net9.0/ref/Fortress.Domain.dll
+/Users/prajwal/Documents/CODE_PROJECTS/Fortress/Fortress.Domain/obj/Debug/net9.0/Fortress.Domain.sourcelink.json
