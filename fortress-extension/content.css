@@ -1,0 +1,52 @@
+.fortress-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  background-color: #007bff;
+  border-radius: 4px;
+  color: white;
+  font-size: 13px;
+  font-weight: bold;
+  border: none;
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1000;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  user-select: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.fortress-icon:hover {
+  background-color: #0056b3;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.fortress-icon:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+.fortress-icon::after {
+  content: "F";
+  font-family: Arial, sans-serif;
+}
+
+.fortress-input-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.fortress-input-wrapper input {
+  padding-right: 35px !important; /* Make space for the icon */
+  box-sizing: border-box;
+}
+
+
+
+
+

@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Npgsql.EntityFrameworkCore.PostgreSQL; // Add this using directive
+using Amazon.SimpleEmail;
+using Amazon.Extensions.NETCore.Setup;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -76,11 +78,32 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowNextJs", policy =>
     {
-        policy.WithOrigins("http://localhost:3000", "http://localhost:3001","http://localhost:3002","http://localhost:3003","http://localhost:3004") // Your Next.js dev URL
+        policy.WithOrigins(
+            "http://localhost:3000", 
+            "http://localhost:3001",
+            "http://localhost:3002",
+            "http://localhost:3003",
+            "http://localhost:3004",
+            "http://myfortress.shop",
+            "https://myfortress.shop"
+        ) // Your Next.js dev URL and production domain
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials();
+    });
+    
+    // Allow Chrome extension requests (for background script API calls)
+    options.AddPolicy("AllowExtensions", policy =>
+    {
+        policy.AllowAnyOrigin() // Extensions use chrome-extension:// protocol which varies
               .AllowAnyHeader()
               .AllowAnyMethod();
     });
 });
+
+// Configure AWS services
+builder.Services.AddDefaultAWSOptions(builder.Configuration.GetAWSOptions());
+builder.Services.AddAWSService<IAmazonSimpleEmailService>();
 
 var app = builder.Build();
 
@@ -93,7 +116,31 @@ if (app.Environment.IsDevelopment())
 
 // ** THE FIX IS HERE **
 // Use the CORRECT policy name that you defined above.
-app.UseCors("AllowNextJs");
+// Allow both Next.js and extension requests
+app.UseCors(policy =>
+{
+    policy.SetIsOriginAllowed(origin =>
+    {
+        // Allow localhost origins
+        if (origin != null && (origin.StartsWith("http://localhost:") || origin.StartsWith("https://localhost:")))
+        {
+            return true;
+        }
+        // Allow production domain
+        if (origin != null && (origin.StartsWith("http://myfortress.shop") || origin.StartsWith("https://myfortress.shop")))
+        {
+            return true;
+        }
+        // Allow Chrome extension origins (null origin is common for extension requests)
+        if (origin == null || origin == "null" || origin.StartsWith("chrome-extension://"))
+        {
+            return true;
+        }
+        return false;
+    })
+    .AllowAnyHeader()
+    .AllowAnyMethod();
+});
 
 app.UseHttpsRedirection();
 

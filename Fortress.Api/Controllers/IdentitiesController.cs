@@ -7,6 +7,7 @@ using Fortress.Infrastructure.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace Fortress.Api.Controllers;
 
@@ -16,16 +17,28 @@ namespace Fortress.Api.Controllers;
 public class IdentitiesController : ControllerBase
 {
     private readonly ApplicationDbContext _context;
-    private static readonly byte[] EncryptionKey = new byte[32]; // For demo, a 32-byte key for AES-256
+    private readonly byte[] _encryptionKey;
 
-    static IdentitiesController() // Static constructor to initialize the key once
-    {
-        RandomNumberGenerator.Fill(EncryptionKey); // Fill with cryptographically strong random bytes
-    }
-
-    public IdentitiesController(ApplicationDbContext context)
+    public IdentitiesController(ApplicationDbContext context, IConfiguration configuration)
     {
         _context = context;
+        
+        // Get encryption key from configuration, or generate a default one
+        var keyString = configuration["Encryption:Key"] ?? "ThisIsMyEncryptionKeyForFortressItMustBe32BytesLongExactly!!";
+        
+        // Ensure the key is exactly 32 bytes for AES-256
+        if (keyString.Length < 32)
+        {
+            // Pad with a fixed pattern if too short
+            keyString = keyString.PadRight(32, '!');
+        }
+        else if (keyString.Length > 32)
+        {
+            // Truncate if too long
+            keyString = keyString.Substring(0, 32);
+        }
+        
+        _encryptionKey = Encoding.UTF8.GetBytes(keyString);
     }
     
 
@@ -34,7 +47,7 @@ public class IdentitiesController : ControllerBase
     {
         // Generate a unique random email alias
         var randomSuffix = Convert.ToBase64String(RandomNumberGenerator.GetBytes(6)).TrimEnd('=').Replace('/', '-');
-        var emailAlias = $"{dto.ServiceName.ToLower().Replace(" ", ".")}.{randomSuffix}@fortresskey.com";
+        var emailAlias = $"{dto.ServiceName.ToLower().Replace(" ", ".")}.{randomSuffix}@myfortress.shop";
 
         // Generate a cryptographically strong 16-character password
         var passwordBytes = RandomNumberGenerator.GetBytes(12); // 12 bytes for 16-char base64
@@ -67,7 +80,7 @@ public class IdentitiesController : ControllerBase
             var encryptedPassword = new byte[passwordBytes.Length];
             var tag = new byte[16];
 
-            using (var aes = new AesGcm(EncryptionKey, 16))
+            using (var aes = new AesGcm(_encryptionKey, 16))
             {
                 aes.Encrypt(nonce, passwordBytes, encryptedPassword, tag);
             }
@@ -152,7 +165,7 @@ public class IdentitiesController : ControllerBase
             var encryptedPassword = new byte[passwordBytes.Length];
             var tag = new byte[16];
 
-            using (var aes = new AesGcm(EncryptionKey, 16))
+            using (var aes = new AesGcm(_encryptionKey, 16))
             {
                 aes.Encrypt(nonce, passwordBytes, encryptedPassword, tag);
             }
@@ -195,7 +208,7 @@ public class IdentitiesController : ControllerBase
         // The authentication tag must be retrieved from the stored identity
         // var tag = new byte[16]; // This was incorrectly re-initialized
 
-        using (var aes = new AesGcm(EncryptionKey, 16))
+        using (var aes = new AesGcm(_encryptionKey, 16))
         {
             aes.Decrypt(identity.EncryptionNonce, identity.EncryptedPassword, identity.EncryptionTag, decryptedPasswordBytes);
         }
